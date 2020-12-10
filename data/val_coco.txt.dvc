@@ -1,0 +1,4 @@
+outs:
+- md5: 7bf2e87c0c3c6a9eb3d40a5de0e4cf09
+  size: 4421688
+  path: val_coco.txt

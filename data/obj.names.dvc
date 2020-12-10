@@ -1,0 +1,4 @@
+outs:
+- md5: 2b28c0008b4b28e4dc9643d0eb00796f
+  size: 7
+  path: obj.names

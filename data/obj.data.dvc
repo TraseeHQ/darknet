@@ -1,0 +1,4 @@
+outs:
+- md5: 6270a38282f8e88da179b0310da294a8
+  size: 107
+  path: obj.data

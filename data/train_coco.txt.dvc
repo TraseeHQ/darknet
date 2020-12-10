@@ -1,0 +1,4 @@
+outs:
+- md5: 84878365ddf160c2266e500e2626b233
+  size: 1105543
+  path: train_coco.txt

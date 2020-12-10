@@ -1,7 +1,7 @@
-GPU=0
-CUDNN=0
-CUDNN_HALF=0
-OPENCV=0
+GPU=1
+CUDNN=1
+CUDNN_HALF=1
+OPENCV=1
 AVX=0
 OPENMP=0
 LIBSO=0
@@ -197,3 +197,26 @@ setchmod:
 
 clean:
 	rm -rf $(OBJS) $(EXEC) $(LIBNAMESO) $(APPNAMESO)
+
+# ---------------------------------------------------------------------
+DOCKER_RUN := docker run --rm -it --gpus all
+LOCAL_USER := -e LOCAL_USER_ID=`id -u $(USER)` -e LOCAL_GROUP_ID=`id -g $(USER)`
+tag = trasee/darknet:latest
+XAUTHORITY := /tmp/.docker.xauth
+PASS_XSERVER := --volume /tmp/.X11-unix:/tmp/.X11-unix \
+                --volume $(XAUTHORITY):$(XAUTHORITY) \
+	            --env XAUTHORITY=$(XAUTHORITY) \
+                --env DISPLAY
+DOCKER_ARGS ?= -v $(shell pwd):/app --shm-size 32G $(PASS_XSERVER)
+
+
+trasee.build: ## Build docker image with all dependencies
+	docker build -f dockerfiles/Dockerfile -t $(tag) .
+
+cmd ?= /bin/bash
+trasee.run:  ## Run docker shell
+	rm -f $(XAUTHORITY)
+	touch $(XAUTHORITY)
+	chmod 755 $(XAUTHORITY)
+	$(shell xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f $(XAUTHORITY) nmerge -)
+	$(DOCKER_RUN) $(LOCAL_USER) $(DOCKER_ARGS) $(tag) $(cmd)

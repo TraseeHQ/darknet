@@ -1,2 +1,4 @@
+[cache]
+    type = "reflink,copy"
 ['remote "storage"']
     url = s3://trasee-dvc-data/yolo

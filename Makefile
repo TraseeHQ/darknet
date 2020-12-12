@@ -207,7 +207,7 @@ PASS_XSERVER := --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume $(XAUTHORITY):$(XAUTHORITY) \
 	            --env XAUTHORITY=$(XAUTHORITY) \
                 --env DISPLAY
-DOCKER_ARGS ?= -v $(shell pwd):/app --shm-size 32G $(PASS_XSERVER)
+DOCKER_ARGS ?= -v $(shell pwd):/app --shm-size 32G $(PASS_XSERVER) -p 8090:8090
 
 
 trasee.build: ## Build docker image with all dependencies
